@@ -4,12 +4,19 @@ const path = require("path");
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
+
+
 const SERVER_PORT = 3030;
 
 app.use(
   "/",
   express.static(path.join(__dirname, "videoapp/player"))
 ); /* Link root address with root app folder*/
+
+app.use(
+  "/videoapp/mobile",
+  express.static(path.join(__dirname, "videoapp/mobile"))
+  )
 
 let clientSocket;
 
@@ -18,27 +25,27 @@ io.on("connection", (socket) => {
   console.log(`socket connected ${socket.id}`);
 
   /* Mobile connection */
-  socket.on("POINTER_CONNECTED", () => {
+  socket.on("PLAYER_CONNECTED", () => {
     socket.emit("ACK_CONNECTION");
-    if (clientSocket)
-      clientSocket.emit("NEW_POINTER", { pointerId: socket.id });
+    
   });
 
-  /* Mobile sensor reading */
-  socket.on("SENSOR_READING", (data) => {
+  /*Mobile sensor reading */
+  socket.on("DO_ACTION", (data) => {
     //console.log(data);
     if (clientSocket)
-      clientSocket.emit("SENSOR_READING", {
+      clientSocket.emit("DO_ACTION_PLAYER", {
         pointerId: socket.id,
-        coords: data,
+        action: data,
       });
   });
 
   /* Movie client connection */
-  socket.on("CLIENT_CONNECTED", () => {
+  socket.on("MOBILE_CONNECTED", () => {
     clientSocket = socket;
     clientSocket.emit("ACK_CONNECTION");
-  });
+     
+  })
 
 });
 
