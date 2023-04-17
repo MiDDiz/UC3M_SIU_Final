@@ -9,6 +9,10 @@ function init(){
         /* On click generate new qr and toggle its visibility */
        /* generateQR();
     });*/
+
+	$("#btn-repr").click(() => {
+		
+	});
 }
 
 
@@ -25,6 +29,8 @@ function generateQR(){
 }
 
 
+const socket = io("http://localhost:5500");
+
 socket.on("connect", () => {
     socket.emit("PLAYER_CONNECTED", { id: 1 });
   
@@ -33,6 +39,5 @@ socket.on("connect", () => {
     });
 
 });
-
 
 init();

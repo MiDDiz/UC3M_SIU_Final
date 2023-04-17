@@ -1,22 +1,22 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const path = require("path");
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const path = require('path');
+const server = require('http').Server(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+    }});
 
-
-
-const SERVER_PORT = 3030;
+const SERVER_PORT = 3000;
 
 app.use(
   "/",
-  express.static(path.join(__dirname, "videoapp/player"))
+  express.static(path.join(__dirname, "videoapp"))
 ); /* Link root address with root app folder*/
 
-app.use(
-  "/videoapp/mobile",
-  express.static(path.join(__dirname, "videoapp/mobile"))
-  )
+  
+
 
 let clientSocket;
 
@@ -51,5 +51,5 @@ io.on("connection", (socket) => {
 
 /* Throw server */
 server.listen(SERVER_PORT, () => {
-  console.log("Server listening...");
+  console.log(`Server listening in port ${SERVER_PORT}...`);
 });
