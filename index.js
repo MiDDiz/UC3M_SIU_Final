@@ -31,22 +31,8 @@ io.on("connection", (socket) => {
     
   });
 
-  /*Mobile sensor reading */
-  socket.on("DO_ACTION", (data) => {
-    
-    if (clientSocket)
-    console.log(`Transfiriendo datos de ${socket.id} a ${clientSocket}`)
-    console.log(data);
-      clientSocket.emit("DO_ACTION_PLAYER", {
-        pointerId: socket.id,
-        action: data,
-      });
-  });
 
-  socket.on
-
-
-  /* Movie client connection */
+  /* Mobile client connection */
   socket.on("MOBILE_CONNECTED", () => {
     clientSocket = socket;
     console.log("MOBILE CONNECTED");
@@ -54,6 +40,19 @@ io.on("connection", (socket) => {
      
   })
 
+  /*Mobile sensor reading */
+  socket.on("DO_ACTION", (data) => {
+      if (clientSocket){
+      console.log(`Transfiriendo datos de ${socket.id} a ${socket.id}`)
+      console.log(data);
+      clientSocket.emit("DO_ACTION_PLAYER", {
+          pointerId: socket.id,
+          action: data,
+      });
+    }
+    });
+  
+  
 });
 
 /* Throw server */

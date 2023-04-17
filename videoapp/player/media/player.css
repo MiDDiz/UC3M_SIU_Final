@@ -113,12 +113,13 @@ body {
 
 /* Modal */
 .modal-dialog {
-	width: 80%;
-	height: 80%;
+	width: 80%!important;
+	max-width: none;
+	height: auto;
 }
 .modal-content{
-	width: inherit;
-	height: inherit;
+	width: 100%!important;
+	height: auto;
 }
 
 .modal-body {
