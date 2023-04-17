@@ -9,13 +9,15 @@ var desplazamiento_arriba = 0;
 
 
 socket.on("connect", () => {
-  socket.emit("POINTER_CONNECTED");
+  socket.emit("MOBILE_CONNECTED");
+
+  socket.on("ACK_CONNECTION", () => {
+    console.log("MÓVIL CONECTADO");
+
+  });
+  
 });
 
-socket.on("ACK_CONNECTION", () => {
-  console.log("MÓVIL CONECTADO");
-  // lanzar avelerometro  
-});
 
 function send_action(action, text){
   if (action == "NOTEPAD"){
@@ -98,4 +100,25 @@ if((velocidad) > 50 || (velocidad) < -50){
   }
 }
 });
+
+// Luego mover al notepad
+
+const reconocer_voz = () =>{
+  if ("webkitSpeechRecognition" in window) {
+    const recnocimiento_voz = new webkitSpeechRecognition();
+    recnocimiento_voz.continuous = true // Activar al dar al boton o lo que sea de activar el micro
+    recnocimiento_voz.interimResults = true
+    let voz = "";
+    recnocimiento_voz.onresult = (evento) =>{
+      const transcript = event.results[event.results.length - 1][0].transcript;
+      voz += transcript;
+      console.log(transcript);
+      
+    }
+    recnocimiento_voz.start();
+  }
+  else{
+    alert("El reconocimiento de voz no es compatible");
+  }
+}
 
