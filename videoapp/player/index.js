@@ -1,6 +1,6 @@
 
 
-const QRPAGE = "localhost:3030/videoapp/mobile/index.html"
+const QRPAGE = "localhost:3000/mobile/index.html"
 
 
 function init(){
@@ -29,7 +29,7 @@ function generateQR(){
 }
 
 
-const socket = io("http://localhost:5500");
+const socket = io();
 
 socket.on("connect", () => {
     socket.emit("PLAYER_CONNECTED", { id: 1 });
