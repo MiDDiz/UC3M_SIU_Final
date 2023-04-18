@@ -98,7 +98,16 @@ function selectVideoBott(userPlayer){
 	);
 }
 
+function playVideoSelected(userPlayer){
+	if (checkVideoWithinBorders(
+		userPlayer.coordsVideoSelected.x,
+		userPlayer.coordsVideoSelected.y
+	) == false){
+		return ;
+	}
 
+
+}
 
 
 
@@ -134,6 +143,28 @@ function pausePlayer(){
 	
 }
 
+/* Función para lanzar el modal al clickar en un video */
+$(function() {
+	$(".video-wrapper video").click(function (e) {
+		e.preventDefault();
+		console.log("ay");
+		var theModal = $(this).data("target"),
+			videoSRC = $(this).attr("src"),
+			videoSRCauto = videoSRC + "";
+		console.log(videoSRCauto);
+
+		playVideo(videoSRCauto, "video/webm");
+
+		/* When modal is hidden, pause video on background */
+		$(theModal).on('hidden.bs.modal', function () {
+			pausePlayer();
+		});
+
+
+		$(theModal).modal("toggle");
+	});
+});
+
 
 /* Function to hook select video to arrows*/
 
@@ -152,6 +183,8 @@ document.addEventListener('keydown', function(event) {
 		case "ArrowDown":
 			selectVideoBott(userPlayer);
 			break;
+		case "Space":
+			playVideoSelected(userPlayer);
 	}
 });
 
