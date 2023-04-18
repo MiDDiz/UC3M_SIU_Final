@@ -38,6 +38,11 @@ socket.on("connect", () => {
       console.log("ACK");
     });
 
+    socket.on("DO_ACTION_PLAYER", (socketip, data) => {
+        console.log("Datos recibidos");
+        console.log(data);
+      });
+
 });
 
 init();
