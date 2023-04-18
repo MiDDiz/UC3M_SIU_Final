@@ -18,7 +18,8 @@ app.use(
   
 
 
-let clientSocket;
+let clientSocket = null;
+let playerSocket = null;
 
 io.on("connection", (socket) => {
   /* Main connection listener */
@@ -26,46 +27,32 @@ io.on("connection", (socket) => {
 
   /* Mobile connection */
   socket.on("PLAYER_CONNECTED", () => {
+    playerSocket = socket; 
     console.log("PLAYER CONNECTED");
-    socket.emit("ACK_CONNECTION");
+    playerSocket.emit("ACK_CONNECTION");
     
   });
-
-  /*Mobile sensor reading */
-  socket.on("DO_ACTION", (data) => {
-    
-    if (clientSocket)
-    console.log(`Transfiriendo datos de ${socket.id} a ${clientSocket}`)
-    console.log(data);
-      clientSocket.emit("DO_ACTION_PLAYER", {
-        pointerId: socket.id,
-        action: data,
-      });
-  });
-
-  if (clientSocket){
-    /*Mobile sensor reading */
-    clientSocket.on("DO_ACTION", (data) => {
-      console.log(`Transfiriendo datos de ${clientSocket.id} a ${socket.id}`)
-      console.log(data);
-      socket.emit("DO_ACTION_PLAYER", {
-          pointerId: clientSocket.id,
-          action: data,
-        
-      });
-    });
-  };
-
-  /* Mobile client connection */
 
   /* Mobile client connection */
   socket.on("MOBILE_CONNECTED", () => {
     clientSocket = socket;
     console.log("MOBILE CONNECTED");
     clientSocket.emit("ACK_CONNECTION");
-     
   })
 
+
+ if (clientSocket){
+    /*Mobile sensor reading */
+    socket.on("DO_ACTION", (data) => {
+      console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
+      console.log(data);
+      playerSocket.emit("DO_ACTION_PLAYER", {
+          pointerId: clientSocket.id,
+          action: data,
+        
+      });
+    });
+  };
 });
 
 

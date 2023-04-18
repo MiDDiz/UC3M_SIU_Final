@@ -134,28 +134,6 @@ function pausePlayer(){
 	
 }
 
-	/* Función para lanzar el modal al clickar en un video */
-  $(function() {
-	$(".video-wrapper video").click(function (e) {
-		e.preventDefault();
-		console.log("ay");
-		var theModal = $(this).data("target"),
-			videoSRC = $(this).attr("src"),
-			videoSRCauto = videoSRC + "";
-		console.log(videoSRCauto);
-
-		playVideo(videoSRCauto, "video/webm");
-
-		/* When modal is hidden, pause video on background */
-		$(theModal).on('hidden.bs.modal', function () {
-			pausePlayer();
-		});
-		
-		
-		$(theModal).modal("toggle");
-
-	});
-  });
 
 /* Function to hook select video to arrows*/
 
@@ -174,6 +152,21 @@ document.addEventListener('keydown', function(event) {
 		case "ArrowDown":
 			selectVideoBott(userPlayer);
 			break;
-		case
 	}
+});
+
+const socket = io();
+
+socket.on("connect", () => {
+    socket.emit("PLAYER_CONNECTED", { id: 1 });
+  
+    socket.on("ACK_CONNECTION", () => {
+      console.log("ACK");
+    });
+
+    socket.on("DO_ACTION_PLAYER", (data) => {
+        console.log(`Datos recibidos de ${data.pointerId}`);
+        console.log(data.action);
+      });
+
 });

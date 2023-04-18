@@ -29,20 +29,5 @@ function generateQR(){
 }
 
 
-const socket = io();
-
-socket.on("connect", () => {
-    socket.emit("PLAYER_CONNECTED", { id: 1 });
-  
-    socket.on("ACK_CONNECTION", () => {
-      console.log("ACK");
-    });
-
-    socket.on("DO_ACTION_PLAYER", (socketip, data) => {
-        console.log("Datos recibidos");
-        console.log(data);
-      });
-
-});
 
 init();
