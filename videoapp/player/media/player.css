@@ -76,6 +76,13 @@ body {
 	box-shadow: 0 0 10px 3px #21005D;
 }
 
+.video-selected.video-wrapper {
+	transition-property: all;
+	transition-duration: 0.1s;
+	transition-timing-function: linear;
+	box-shadow: 0 0 10px 3px #21005D;
+}
+
 .video-wrapper video {
 	border-radius: 0.6em;
 	transition-property: all;
@@ -90,6 +97,15 @@ body {
 	transition-timing-function: linear;
 	
 }
+
+.video-selected.video-wrapper video {
+	border-radius: 0;
+	transition-property: all;
+	transition-duration: 0.1s;
+	transition-timing-function: linear;
+	
+}
+
 .video-wrapper .video-title{
 
 	
