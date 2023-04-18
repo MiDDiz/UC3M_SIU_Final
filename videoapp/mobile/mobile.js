@@ -71,7 +71,7 @@ document.addEventListener("touchstart", (evento) => {
 
   window.addEventListener("devicemotion", (evento) =>  {
     velocidad = evento.accelerationIncludingGravity.y;
-    //console.log(`dif: ${velocidad}`);
+    /*console.log(`dif: ${velocidad}`);*/
 
     if(((velocidad) > 3 || (velocidad) < -3) && realizando_accion == 0){
       vel_buff = velocidad 
@@ -82,7 +82,6 @@ document.addEventListener("touchstart", (evento) => {
       } else if (vel_buff < 0) {
         subiendo = 0;
       }
-     
       /* A continuación, hacemos el switch para poder mandar 
       distintas acciones en función del número de dedos*/
       switch(n_dedos){

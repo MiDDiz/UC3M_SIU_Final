@@ -22,25 +22,18 @@ function pausePlayer(){
 	
 }
 
-	/* Función para lanzar el modal al clickar en un video */
-  $(function() {
-	$(".video-wrapper video").click(function (e) {
-		e.preventDefault();
-		console.log("ay");
-		var theModal = $(this).data("target"),
-			videoSRC = $(this).attr("src"),
-			videoSRCauto = videoSRC + "";
-		console.log(videoSRCauto);
+const socket = io();
 
-		playVideo(videoSRCauto, "video/webm");
+socket.on("connect", () => {
+    socket.emit("PLAYER_CONNECTED", { id: 1 });
+  
+    socket.on("ACK_CONNECTION", () => {
+      console.log("ACK");
+    });
 
-		/* When modal is hidden, pause video on background */
-		$(theModal).on('hidden.bs.modal', function () {
-			pausePlayer();
-		});
-		
-		
-		$(theModal).modal("toggle");
+    socket.on("DO_ACTION_PLAYER", (data) => {
+        console.log(`Datos recibidos de ${data.pointerId}`);
+        console.log(data.action);
+      });
 
-	});
-  });
+});
