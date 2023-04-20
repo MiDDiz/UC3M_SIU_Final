@@ -147,3 +147,18 @@ position:absolute;
 right:-30px;
 top:0;
 }
+
+
+.note{
+	height:  100%;
+	max-width: 20%;
+}
+
+.note-section{
+	min-height: 75%;
+}
+
+.placeholder-text{
+	color: #868585!important;
+	text-decoration: wavy!important;
+}
