@@ -98,27 +98,24 @@ function selectVideoBott(userPlayer){
 	);
 }
 
-function playVideoSelected(userPlayer){
+function  (userPlayer){
 	if (checkVideoWithinBorders(
 		userPlayer.coordsVideoSelected.x,
 		userPlayer.coordsVideoSelected.y
 	) == false){
 		return ;
 	}
+	let video = $(videoFrames[userPlayer.coordsVideoSelected.y][userPlayer.coordsVideoSelected.x].querySelector("video"));
+	let modal = video.data("target");
+	let videoSrc = video.attr("src");
+	playVideo(videoSrc + "", "video/webm");
+	$(modal).on('hidden.bs.modal', function () {
+		pausePlayer();
+	});
+	$(modal).modal("toggle");
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* Bootstrap snippets */
 
@@ -147,7 +144,6 @@ function pausePlayer(){
 $(function() {
 	$(".video-wrapper video").click(function (e) {
 		e.preventDefault();
-		console.log("ay");
 		var theModal = $(this).data("target"),
 			videoSRC = $(this).attr("src"),
 			videoSRCauto = videoSRC + "";
@@ -170,6 +166,7 @@ $(function() {
 
 document.addEventListener('keydown', function(event) {
     const key = event.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+	console.log(key);
 	switch (key) {
 		case "ArrowLeft":
 			selectVideoLeft(userPlayer);
@@ -183,8 +180,9 @@ document.addEventListener('keydown', function(event) {
 		case "ArrowDown":
 			selectVideoBott(userPlayer);
 			break;
-		case "Space":
+		case " ":
 			playVideoSelected(userPlayer);
+			break;
 	}
 });
 
