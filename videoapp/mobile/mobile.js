@@ -1,8 +1,7 @@
 const socket = io();
-
+/* DOM elements */
+let mensaje_dedos = document.getElementById("texto");
 let velocidad = 0;
-
-
 
 var n_dedos = 0;
 var subiendo = 0;
@@ -20,8 +19,10 @@ socket.on("connect", () => {
   
 
   function send_action(action, text){
-    if (action == "NOTEPAD"){
-      socket.emit("SEND_NOTEPAD", text);
+    if (action == "ADD_NOTE"){
+      socket.emit("ADD_NOTE", text);
+    } else if (action == "SHOW_NOTEPAD"){
+      socket.emit("SHOW_NOTEPAD");
     } else {
       socket.emit("DO_ACTION", action);
       navigator.vibrate(200);
@@ -32,43 +33,47 @@ socket.on("connect", () => {
 
   // Codigo incompleto para adaptarlo 
 
-  const acl = new Accelerometer({ frequency: 60 });
-  /*
-  acl.addEventListener("reading", () => { // Cambiar evento por touch
-    possY_inicial = acl.y; 
-  });
-  */
+//const acl = new Accelerometer({ frequency: 60 });
 
-  acl.start();
-  /*
-  setInterval( () => {
-    // Meter cambios
-    let diff_ejeY = Math.abs(posY_final - possY_inicial);
-    // Luego actulizar 
-    posY_final =  possY_inicial;
 
-  })
-  */
+//acl.start();
 
 document.addEventListener("touchstart", (evento) => { 
 
   if (evento.touches.length == 4){
     // lanzar directamente notepad
     n_dedos = 4;
+    navigator.vibrate(200);
+    reconocer_voz();
+    $(mensaje_dedos).text("TOMAR NOTA");
   }
   else if(evento.touches.length == 3){
     n_dedos = 3;
+    $(mensaje_dedos).text("SIGUIENTE-ANTERIOR VIDEO ");
   }
   else if(evento.touches.length == 2){
     n_dedos = 2;
+    $(mensaje_dedos).text("CONTROLAR VOLUMEN");
   }
   else if (evento.touches.length == 1){
     n_dedos = 1;
+    $(mensaje_dedos).text("PLAY-PAUSE");
   }
   else {
     //RAISE ERROR
   }
 });
+
+function changeController(){
+	if ($(".controller").is(":visible")){
+		$(".controller").hide();
+		$(".gesture").show();
+	} else {
+    	$(".gesture").hide();
+		$(".controller").show()
+	}
+
+}
 
 
   window.addEventListener("devicemotion", (evento) =>  {
@@ -129,21 +134,24 @@ document.addEventListener("touchstart", (evento) => {
     }
   });
 
-  // Luego mover al notepad
+
 
 const reconocer_voz = () =>{
   if ("webkitSpeechRecognition" in window) {
     const recnocimiento_voz = new webkitSpeechRecognition();
-    recnocimiento_voz.continuous = true // Activar al dar al boton o lo que sea de activar el micro
+    recnocimiento_voz.continuous = true 
     recnocimiento_voz.interimResults = true
     let voz = "";
     recnocimiento_voz.onresult = (evento) =>{
       const transcript = event.results[event.results.length - 1][0].transcript;
       voz += transcript;
       console.log(transcript);
-      
+      if (transcript.toLowerCase().includes("cerrar nota")){
+        recnocimiento_voz.stop();
+      }
     }
     recnocimiento_voz.start();
+
   }
   else{
     alert("El reconocimiento de voz no es compatible");
@@ -152,13 +160,15 @@ const reconocer_voz = () =>{
 
 
 // Botones mando
-var boton_arr= document.getElementById("arr");
+var boton_arr = document.getElementById("arr");
 var boton_izq = document.getElementById("izq");
 var boton_ok = document.getElementById("ok");
 var boton_der = document.getElementById("der");
 var boton_abj = document.getElementById("abj");
 var boton_volver = document.getElementById("volver");
 var boton_notepad = document.getElementById("notepad");
+var boton_cambiar_gestos = document.getElementById("cambiar-mano");
+var boton_cambiar_mando = document.getElementById("cambiar-modo");
 
 boton_arr.addEventListener("click", () =>{
   send_action("ARROW-UP");
@@ -180,4 +190,10 @@ boton_volver.addEventListener("click", () =>{
 });
 boton_notepad.addEventListener("click", () =>{
   send_action("OPEN-NOTEPAD");
+});
+boton_cambiar_gestos.addEventListener("click", () =>{
+	changeController();
+});
+boton_cambiar_mando.addEventListener("click", () =>{
+	changeController();
 });

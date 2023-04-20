@@ -12,16 +12,10 @@ body {
     background-color:  #DED8E1;
 }
 #main{
-
-    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0 auto;
-    bottom: 0;
     background-color: #DED8E1;
 }
 
@@ -81,7 +75,14 @@ body {
 }
 
 #columna4{
-    padding-top: 10em;
+}
+
+#columna0{
+	margin: auto;
+    margin-right: 5px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 #ok{
@@ -91,16 +92,58 @@ body {
 
 header{
     width: 100%;
-    height: 5em;
+    height: 3.5em;
     background: #381E72;
-    border-radius: 1em;
+    border-radius: 0 0 1em 1em;
+	margin-top: 0;
 }
 
 footer{
     width: 100%;
-    height: 4em;
+    height: 3.5em;
     background: #381E72;
-    border-radius: 1em;
+    border-radius: 1em 1em 0 0;
+	margin: auto;
+	margin-bottom: 0;
+
 }
 
-  
+.controller{
+	height: 100%;
+}
+
+
+/* CSS GESTOS */
+
+.gesture{
+	height: 100%;
+	width: 100%;
+}
+
+#texto-gestos{
+	
+	position: fixed;
+	height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+	top: 0;
+	z-index: -99;
+}
+
+
+#texto-gestos p{
+    transform: rotate(90deg);
+	font-size:10vw;
+}
+
+#box-cambiar-modo{
+    padding-left: 16em;
+    margin-left: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1em;
+	z-index: 1;
+}

@@ -11,20 +11,50 @@
         <meta name="description" content="SIU Mobile Controler">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.js" integrity="sha512-6DC1eE3AWg1bgitkoaRM1lhY98PxbMIbhgYCGV107aZlyzzvaWCW1nJW2vDuYQm06hXrW0As6OGKcIaAVWnHJw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-        <link rel="stylesheet" href="./media/style.css">
+        <link rel="stylesheet" href="./media/mobile.css">
     </head>
-    <div class="header"> 
-        <h1> Conecta tu móvil </h1>
-    </div>
-    <div class="body">
-        
-    </div>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        
-        <script src="./mobile.js" async defer></script>
+		<div class="controller" style="display:none;">
+			<div id ="main">
+				<header></header>
+					<div id="botones">
+						<div id="columna0"> 
+							<button id="cambiar-mano" class="btn"> <img src="./media/mano.svg"/> </button>
+						</div>
+						<div id="columna1" class="colum"> 
+							<button id="arr" class="btn"> <img src="media/flecha.png"/> </button>
+						</div>
+						<div id ="columna2" class="colum"> 
+							<button id="izq" class="btn"> <img src="media/flecha.png"/> </button>
+							<button id="ok" class="btn"> OK </button>
+							<button id="der" class="btn">  <img src="media/flecha.png"/> </button>
+						</div>
+						<div id="columna3" class="colum"> 
+							<button id="abj" class ="btn">  <img src="media/flecha.png"/> </button>
+						</div>
+						<div id="columna4" class="colum"> 
+							<button id="volver" class ="btn">  <img src="media/volver.png"/> </button>
+							<bu*tton id="notepad" class ="btn">  <img src="media/notebook.svg"/> </button>
+						</div>
+					</div>
+				<footer></footer>
+			</div> 
+		</div>
+		
+		<div class="gesture" style="">
+			<div id = "box-cambiar-modo">
+				<button id="cambiar-modo" class="btn"> <img src="./media/mando.png"/> </button>
+			</div>
+			<div id="texto-gestos">
+				
+				<p id="texto"> Haz click y comienza a gesticular! </p> 
+			</div>
+		</div>
     </body>
+	<script src="./mobile.js" async defer></script>
 </html>

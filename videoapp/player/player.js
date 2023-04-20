@@ -1,3 +1,26 @@
+/* Server comunnication part */
+
+const socket = io();
+
+socket.on("connect", () => {
+    socket.emit("PLAYER_CONNECTED", { id: 1 });
+  
+    socket.on("ACK_CONNECTION", () => {
+      console.log("ACK");
+    });
+
+    socket.on("DO_ACTION_PLAYER", (data) => {
+        console.log(`Datos recibidos de ${data.pointerId}`);
+        console.log(data.action);
+		doAction(data.action);
+      });
+
+	socket.on("SHOW_NOTEPAD", (notes) => {
+		showNotes(notes);
+	})
+});
+
+
 /* Get all video sections */
 
 /* Return all video elements in a 2d array*/
@@ -284,6 +307,9 @@ document.addEventListener('keydown', function(event) {
 		case "n":
 			changePrevVideo(userPlayer);
 			break;
+		case "1":
+			socket.emit("REQUEST-NOTEPAD");
+			break;
 			
 	}
 });
@@ -327,29 +353,13 @@ function doAction(action){
 		case "CLOSE-PLAYER":
 			hideModal();
 			break;
-		case "OPEN-NOTEPAD":
-			// Abrir NOTEPAD
-			break;
-
-
 	}
 }
 
+function showNotes(notes){
 
 
-const socket = io();
 
-socket.on("connect", () => {
-    socket.emit("PLAYER_CONNECTED", { id: 1 });
-  
-    socket.on("ACK_CONNECTION", () => {
-      console.log("ACK");
-    });
+}
 
-    socket.on("DO_ACTION_PLAYER", (data) => {
-        console.log(`Datos recibidos de ${data.pointerId}`);
-        console.log(data.action);
-		doAction(data.action);
-      });
 
-});

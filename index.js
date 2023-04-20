@@ -41,9 +41,9 @@ io.on("connection", (socket) => {
     clientSocket.emit("ACK_CONNECTION");
   })
 
-
- if (clientSocket){
-    /*Mobile sensor reading */
+  /* Comunications between mobile and player */
+ if (clientSocket && playerSocket){
+    /*Mobile action reading and sending to the player*/
     clientSocket.on("DO_ACTION", (data) => {
       console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
       console.log(data);
@@ -53,42 +53,51 @@ io.on("connection", (socket) => {
         
       });
     });
-    /*socket.on("SEND_NOTEPAD", (text) => {
-      addNewNote(text);
-    });*/
+    /* Mobile request to show the notepad on the player */
+    clientSocket.on("SHOW_NOTEPAD", () => {
+      let notepad = getAllNotes();
+      playerSocket.emit("SHOW_NOTEPAD", notepad);
+    });
+  }
 
-  };
+  /* Communications that only require a mobile */
+  if (clientSocket){
+    // Adds a note to the notepad
+    clientSocket.on("ADD_NOTE", (text) => {
+      addNewNote(text);
+    });
+
+  }
+
+  /* Communications that only require the player */
+  if (playerSocket){
+    // The player requests the notepad without mobile (key 1 on keyboard)
+    playerSocket.on("REQUEST-NOTEPAD");
+    let notepad = getAllNotes();
+    playerSocket.emit("SHOW_NOTEPAD", notepad);
+  }
 });
 
-
+/*Inserts a new note on the notepad. 
+If it already has 8 notes, it removes the least recent*/
 function addNewNote(text){
-  let newnote = JSON.parse(text);
-  prev_notes = readAllNotes();
-  console.log(`New note: \n ${newnote}...`);
-  console.log(`Previous notes: \n ${prev_notes}...`);
-  fs.writeFileSync("notes.json", JSON.stringify(data, null, 2));
-  return;
+  let data = fs.readFileSync("notes.json");
+  const json = JSON.parse(data);
+  json.texts.unshift(text);
+  if (json.texts.length > 8) {
+    json.texts.pop();
+  }
+  fs.writeFileSync("notes.json", JSON.stringify(json)); 
 }
 
-/*async function that read all the json content */
-
-const serveStaticFile = async (file) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, function(err, data) {
-      if(err) reject(err);
-      resolve(data);
-    });
-  });
-} 
-
-
-function readAllNotes(){
-  let jsoncontent = serveStaticFile("notes.json");
-  return jsoncontent;
+/*Returns a list of all the notes on the json*/
+function getAllNotes() {
+  let data;
+  data = fs.readFileSync("notes.json");
+  const notes = JSON.parse(data);
+  return notes.texts;
 }
 
-/*addNewNote("Hola buenas tardes");
-addNewNote("Patata");*/
 
 /* Throw server */
 server.listen(SERVER_PORT, () => {
