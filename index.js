@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -43,7 +44,7 @@ io.on("connection", (socket) => {
 
  if (clientSocket){
     /*Mobile sensor reading */
-    socket.on("DO_ACTION", (data) => {
+    clientSocket.on("DO_ACTION", (data) => {
       console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
       console.log(data);
       playerSocket.emit("DO_ACTION_PLAYER", {
@@ -52,12 +53,42 @@ io.on("connection", (socket) => {
         
       });
     });
+    /*socket.on("SEND_NOTEPAD", (text) => {
+      addNewNote(text);
+    });*/
+
   };
 });
 
 
+function addNewNote(text){
+  let newnote = JSON.parse(text);
+  prev_notes = readAllNotes();
+  console.log(`New note: \n ${newnote}...`);
+  console.log(`Previous notes: \n ${prev_notes}...`);
+  fs.writeFileSync("notes.json", JSON.stringify(data, null, 2));
+  return;
+}
+
+/*async function that read all the json content */
+
+const serveStaticFile = async (file) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, function(err, data) {
+      if(err) reject(err);
+      resolve(data);
+    });
+  });
+} 
 
 
+function readAllNotes(){
+  let jsoncontent = serveStaticFile("notes.json");
+  return jsoncontent;
+}
+
+/*addNewNote("Hola buenas tardes");
+addNewNote("Patata");*/
 
 /* Throw server */
 server.listen(SERVER_PORT, () => {

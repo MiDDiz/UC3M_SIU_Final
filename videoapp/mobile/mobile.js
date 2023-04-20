@@ -24,6 +24,8 @@ socket.on("connect", () => {
       socket.emit("SEND_NOTEPAD", text);
     } else {
       socket.emit("DO_ACTION", action);
+      navigator.vibrate(200);
+      console.log(action);
     }
     
   }
@@ -71,9 +73,9 @@ document.addEventListener("touchstart", (evento) => {
 
   window.addEventListener("devicemotion", (evento) =>  {
     velocidad = evento.accelerationIncludingGravity.y;
-    /*console.log(`dif: ${velocidad}`);*/
 
     if(((velocidad) > 3 || (velocidad) < -3) && realizando_accion == 0){
+      /*console.log(`dif: ${velocidad}`);*/
       vel_buff = velocidad 
       realizando_accion = 1;
       //Este fragmento indica si la acción realizada es de subida o bajada
@@ -148,3 +150,34 @@ const reconocer_voz = () =>{
   }
 }
 
+
+// Botones mando
+var boton_arr= document.getElementById("arr");
+var boton_izq = document.getElementById("izq");
+var boton_ok = document.getElementById("ok");
+var boton_der = document.getElementById("der");
+var boton_abj = document.getElementById("abj");
+var boton_volver = document.getElementById("volver");
+var boton_notepad = document.getElementById("notepad");
+
+boton_arr.addEventListener("click", () =>{
+  send_action("ARROW-UP");
+});
+boton_izq.addEventListener("click", () =>{
+  send_action("ARROW-LEFT");
+});
+boton_ok.addEventListener("click", () =>{
+  send_action("OK");
+});
+boton_der.addEventListener("click", () =>{
+  send_action("ARROW-RIGHT");
+});
+boton_abj.addEventListener("click", () =>{
+  send_action("ARROW-DOWN");
+});
+boton_volver.addEventListener("click", () =>{
+  send_action("CLOSE-PLAYER");
+});
+boton_notepad.addEventListener("click", () =>{
+  send_action("OPEN-NOTEPAD");
+});
