@@ -21,13 +21,13 @@ socket.on("connect", () => {
 
   function send_action(action, text){
     console.log(action);
+    navigator.vibrate(200);
     if (action == "ADD_NOTE"){
       socket.emit("ADD_NOTE", text);
     } else if (action == "SHOW_NOTEPAD"){
       socket.emit("SHOW_NOTEPAD");
     } else {
       socket.emit("DO_ACTION", action);
-      navigator.vibrate(200);
     }
     
   }
