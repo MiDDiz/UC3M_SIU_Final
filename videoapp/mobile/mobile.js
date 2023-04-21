@@ -145,9 +145,9 @@ const reconocer_voz = () =>{
     recnocimiento_voz.onresult = (evento) =>{
       const transcript = event.results[event.results.length - 1][0].transcript;
       console.log(transcript);
-      if (transcript.toLowerCase().includes("cerrar nota")){
+      if (transcript.toLowerCase().includes(" cerrar nota")){
         recnocimiento_voz.stop();
-        let nueva_nota = transcript.replace("cerrar nota", "");
+        let nueva_nota = transcript.replace(" cerrar nota", "");
         send_action("ADD_NOTE", nueva_nota);
       }
     }

@@ -357,7 +357,7 @@ function doAction(action){
 }
 
 function showNotes(notes){
-
+console.log(notes)
 
 
 }
