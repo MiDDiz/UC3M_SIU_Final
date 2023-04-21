@@ -20,6 +20,8 @@ En caso de que se quiera volver a la pestaña principal, tan solo es necesario p
  * Play/Pause -> Cuando se coloca un dedo en la pantalla, si mueves el móvil hacia arriba o hacia abajo indistintamente, se realiza el gesto play pause. Este gesto reproduce o para el video según si este ya estaba reproduciendose o parado. Se puede obtener la misma funcionalidad pulsando la tecla "espacio".
  * Subir/Bajar volumen -> Con dos dedos en la pantalla, si mueves el móvil hacia arriba se sube el volumen del video un 15%, y si mueves el móvil hacia abajo, se baja un 15%. Se puede conseguir una funcionalidad similar con las teclas "v" para subir y "b" para bajar. 
  * Siguiente/anterior video -> Con tres dedos en la pantalla, si se mueve el móvil para arriba se pasa al siguiente video, y si se mueve para abajo, se vuelve al anterior. Entendemos que tener tres dedos en la pantalla puede no ser lo más cómodo, especialmente en las situaciones para las que ha sido dieñada esta aplicación, es por ello que le hemos puesto esta funcionalidad, ya que no es tan habitual querer cambiar de video como lo es pararlo o cambiar el volumen. En adición, también se puede usar esta funcionalidad con el teclado mediante las teclas "m" y "n" para siguiente y anterior respectivamente.
+
+ Todos los gestos realizados darán feedback al usuario a través de una vibración, que indicará que el gesto ha sido detectado y enviado al reproductor.
  ### Notas
 El sistema tiene la capacidad de grabar, almacenar y visualizar notas de manera cómoda para el usuario.
 
