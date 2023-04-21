@@ -18,52 +18,69 @@ app.use(
 
   
 
-
-let clientSocket = null;
+let indexSocket = null;
+let mobileSocket = null;
 let playerSocket = null;
 
 io.on("connection", (socket) => {
   /* Main connection listener */
   console.log(`socket connected ${socket.id}`);
 
-  /* Mobile connection */
+  /* Index connection*/
+  socket.on("INDEX_CONNECTED", () => {
+    /* On index connection we want to check 
+    if a controller is already connected */
+    indexSocket = socket;
+    indexSocket.emit("ACK_CONNECTION");
+    if (mobileSocket) {
+      /* Send info to index that a controller 
+      is already connected */
+      indexSocket.emit("CONTROLLER_CONNECTED");
+    }
+  });
+
+  /* Player client connection */
   socket.on("PLAYER_CONNECTED", () => {
     playerSocket = socket; 
     console.log("PLAYER CONNECTED");
     playerSocket.emit("ACK_CONNECTION");
-    
   });
 
   /* Mobile client connection */
   socket.on("MOBILE_CONNECTED", () => {
-    clientSocket = socket;
+    mobileSocket = socket;
     console.log("MOBILE CONNECTED");
-    clientSocket.emit("ACK_CONNECTION");
+    mobileSocket.emit("ACK_CONNECTION");
+    /* On mobile connection check if index is connected, 
+    if so send confirmation to index*/
+    if (indexSocket){
+      indexSocket.emit("CONTROLLER_CONNECTED");
+    }
   })
 
   /* Comunications between mobile and player */
- if (clientSocket && playerSocket){
+ if (mobileSocket && playerSocket){
     /*Mobile action reading and sending to the player*/
-    clientSocket.on("DO_ACTION", (data) => {
-      console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
+    mobileSocket.on("DO_ACTION", (data) => {
+      console.log(`Transfiriendo datos de ${mobileSocket.id} a ${playerSocket.id}`)
       console.log(data);
       playerSocket.emit("DO_ACTION_PLAYER", {
-          pointerId: clientSocket.id,
+          pointerId: mobileSocket.id,
           action: data,
         
       });
     });
     /* Mobile request to show the notepad on the player */
-    clientSocket.on("SHOW_NOTEPAD", () => {
+    mobileSocket.on("SHOW_NOTEPAD", () => {
       let notepad = getAllNotes();
       playerSocket.emit("SHOW_NOTEPAD", notepad);
     });
   }
 
   /* Communications that only require a mobile */
-  if (clientSocket){
+  if (mobileSocket){
     // Adds a note to the notepad
-    clientSocket.on("ADD_NOTE", (text) => {
+    mobileSocket.on("ADD_NOTE", (text) => {
       addNewNote(text);
     });
 

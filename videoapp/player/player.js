@@ -357,9 +357,18 @@ function doAction(action){
 }
 
 function showNotes(notes){
-
-
-
+	let notes = document.querySelectorAll(".note");
+	let i = 0;
+	notes.forEach((noteDOM) => {
+		let textDOM = noteDOM.firstChild();
+		/* Check if there are no more notes left to show */
+		if (i > notes.length + 1){
+			return ;
+		}
+		
+		$(textDOM).text(notes[i]);
+		i++;
+	});
 }
 
 
