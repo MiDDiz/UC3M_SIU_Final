@@ -1,4 +1,5 @@
 const socket = io();
+console.log(socket.id);
 /* DOM elements */
 let mensaje_dedos = document.getElementById("texto");
 let velocidad = 0;
@@ -19,6 +20,7 @@ socket.on("connect", () => {
   
 
   function send_action(action, text){
+    console.log(action);
     if (action == "ADD_NOTE"){
       socket.emit("ADD_NOTE", text);
     } else if (action == "SHOW_NOTEPAD"){
@@ -26,7 +28,6 @@ socket.on("connect", () => {
     } else {
       socket.emit("DO_ACTION", action);
       navigator.vibrate(200);
-      console.log(action);
     }
     
   }
@@ -102,7 +103,7 @@ function changeController(){
             }
             setTimeout(() => {
               n_dedos = 0;
-              accion_mandada = 1;} 
+              accion_mandadas = 1;} 
               , 500);
           break;
         case 2:
@@ -141,13 +142,13 @@ const reconocer_voz = () =>{
     const recnocimiento_voz = new webkitSpeechRecognition();
     recnocimiento_voz.continuous = true 
     recnocimiento_voz.interimResults = true
-    let voz = "";
     recnocimiento_voz.onresult = (evento) =>{
       const transcript = event.results[event.results.length - 1][0].transcript;
-      voz += transcript;
       console.log(transcript);
       if (transcript.toLowerCase().includes("cerrar nota")){
         recnocimiento_voz.stop();
+        let nueva_nota = transcript.replace("cerrar nota", "");
+        send_action("ADD_NOTE", nueva_nota);
       }
     }
     recnocimiento_voz.start();
@@ -189,7 +190,7 @@ boton_volver.addEventListener("click", () =>{
   send_action("CLOSE-PLAYER");
 });
 boton_notepad.addEventListener("click", () =>{
-  send_action("OPEN-NOTEPAD");
+  send_action("SHOW_NOTEPAD");
 });
 boton_cambiar_gestos.addEventListener("click", () =>{
 	changeController();

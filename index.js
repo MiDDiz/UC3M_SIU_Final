@@ -19,14 +19,14 @@ app.use(
   
 
 
-let clientSocket = null;
-let playerSocket = null;
+var clientSocket = null;
+var playerSocket = null;
 
 io.on("connection", (socket) => {
   /* Main connection listener */
   console.log(`socket connected ${socket.id}`);
 
-  /* Mobile connection */
+  /* Player connection */
   socket.on("PLAYER_CONNECTED", () => {
     playerSocket = socket; 
     console.log("PLAYER CONNECTED");
@@ -39,43 +39,51 @@ io.on("connection", (socket) => {
     clientSocket = socket;
     console.log("MOBILE CONNECTED");
     clientSocket.emit("ACK_CONNECTION");
-  })
+  });
 
-  /* Comunications between mobile and player */
- if (clientSocket && playerSocket){
-    /*Mobile action reading and sending to the player*/
-    clientSocket.on("DO_ACTION", (data) => {
-      console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
-      console.log(data);
-      playerSocket.emit("DO_ACTION_PLAYER", {
-          pointerId: clientSocket.id,
-          action: data,
-        
+    /* Comunications between mobile and player */
+      socket.on("DO_ACTION", (data) => {
+        if (clientSocket && socket.id == clientSocket.id){
+          console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
+          console.log(data);
+          playerSocket.emit("DO_ACTION_PLAYER", {
+              pointerId: clientSocket.id,
+              action: data,    
+           });
+      }
       });
-    });
-    /* Mobile request to show the notepad on the player */
-    clientSocket.on("SHOW_NOTEPAD", () => {
-      let notepad = getAllNotes();
-      playerSocket.emit("SHOW_NOTEPAD", notepad);
-    });
-  }
+      /* Mobile request to show the notepad on the player */
+      socket.on("SHOW_NOTEPAD", () => {
+        if (clientSocket && socket.id == clientSocket.id){
+          let notepad = getAllNotes();
+          playerSocket.emit("SHOW_NOTEPAD", notepad);
+        }
+      });
+  
+    /* Communications that only require a mobile */
 
-  /* Communications that only require a mobile */
-  if (clientSocket){
     // Adds a note to the notepad
-    clientSocket.on("ADD_NOTE", (text) => {
+    socket.on("ADD_NOTE", (text) => {
+      if (clientSocket && socket.id == clientSocket.id){
+      console.log("Adding note");
       addNewNote(text);
+      }
     });
 
-  }
-
+    
   /* Communications that only require the player */
+  /*
   if (playerSocket){
     // The player requests the notepad without mobile (key 1 on keyboard)
     playerSocket.on("REQUEST-NOTEPAD");
     let notepad = getAllNotes();
     playerSocket.emit("SHOW_NOTEPAD", notepad);
-  }
+  }*/
+  /*socket.on("DO_ACTION", (data)=>{
+    console.log(socket.id);
+    console.log(clientSocket.id);
+    console.log(playerSocket.id);
+  });*/
 });
 
 /*Inserts a new note on the notepad. 
