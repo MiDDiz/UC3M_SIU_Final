@@ -10,7 +10,11 @@ var subiendo = 0;
 var realizando_accion = 0;
 var accion_mandada = 0;
 
+/* Controll var in order to detect when the interface has to behave as a normal controller 
+or as a  gesture controller */
+var controllerState = true;
 
+ /* Communications */
 socket.on("connect", () => {
   socket.emit("MOBILE_CONNECTED");
   socket.on("ACK_CONNECTION", () =>{
@@ -32,14 +36,13 @@ socket.on("connect", () => {
     
   }
 
-  // Codigo incompleto para adaptarlo 
-
-//const acl = new Accelerometer({ frequency: 60 });
-
-
-//acl.start();
-
+  /* Touch listeners to change visual feedback */
 document.addEventListener("touchstart", (evento) => { 
+
+	evento.preventDefault();
+	if (controllerState == false){
+		return ;
+	}
 
   if (evento.touches.length == 4){
     // lanzar directamente notepad
@@ -66,6 +69,7 @@ document.addEventListener("touchstart", (evento) => {
 });
 
 function changeController(){
+	controllerState = !controllerState;
 	if ($(".controller").is(":visible")){
 		$(".controller").hide();
 		$(".gesture").show();
@@ -76,8 +80,13 @@ function changeController(){
 
 }
 
-
+ /* Gesture listeners */
   window.addEventListener("devicemotion", (evento) =>  {
+
+	if (controllerState == false){
+		return ;
+	}
+
     velocidad = evento.accelerationIncludingGravity.y;
 
     if(((velocidad) > 3 || (velocidad) < -3) && realizando_accion == 0){
@@ -172,29 +181,56 @@ var boton_cambiar_gestos = document.getElementById("cambiar-mano");
 var boton_cambiar_mando = document.getElementById("cambiar-modo");
 
 boton_arr.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("ARROW-UP");
 });
 boton_izq.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("ARROW-LEFT");
 });
 boton_ok.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("OK");
 });
 boton_der.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("ARROW-RIGHT");
 });
 boton_abj.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("ARROW-DOWN");
 });
 boton_volver.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("CLOSE-PLAYER");
 });
 boton_notepad.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
   send_action("SHOW_NOTEPAD");
 });
 boton_cambiar_gestos.addEventListener("click", () =>{
+	if (controllerState == true){
+		return ;
+	}
 	changeController();
 });
 boton_cambiar_mando.addEventListener("click", () =>{
+	if (controllerState == false){
+		return ;
+	}
 	changeController();
 });

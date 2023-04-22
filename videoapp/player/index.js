@@ -3,19 +3,6 @@
 const QRPAGE = "localhost:3000/mobile/index.html"
 
 
-function init(){
-    /*
-    $("#btn-qr-gen").click(() => {
-        /* On click generate new qr and toggle its visibility */
-       /* generateQR();
-    });*/
-
-	$("#btn-repr").click(() => {
-		
-	});
-}
-
-
 function generateQR(){
     //$('.qr-wrapper').innerHTML = QRCODE;
     const QRCODE = new QRCode("qr-code", {
@@ -27,7 +14,3 @@ function generateQR(){
         correctLevel: QRCode.CorrectLevel.H
       });
 }
-
-
-
-init();

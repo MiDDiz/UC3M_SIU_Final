@@ -152,10 +152,13 @@ top:0;
 .note{
 	height:  100%;
 	max-width: 20%;
+	overflow: auto;
+	color: #1D1B20;
 }
 
 .note-section{
 	min-height: 75%;
+	
 }
 
 .placeholder-text{

@@ -16,7 +16,12 @@ socket.on("connect", () => {
       });
 
 	socket.on("SHOW_NOTEPAD", (notes) => {
-		showNotes(notes);
+		if (window.location.href.includes("notes")){
+			location.href = "./player.html";
+		} else {
+			showNotes(notes);
+		}
+
 	})
 });
 
@@ -357,9 +362,10 @@ function doAction(action){
 }
 
 function showNotes(notes){
-console.log(notes)
-
-
+	console.log(notes);
+	/* Set notes to cookie in order to get it on hotes.html */
+	document.cookie = `notes=${JSON.stringify(notes)}; path=/` // Cookie expires as the browser ends session 
+	location.href = "./notes.html";
 }
 
 
