@@ -45,8 +45,21 @@ Para una implementación más sencilla, al igual que con los usuarios hemos deci
 
 Solo se podrán tener un máximo de 8 notas, por simplicidad a la hora de mostrarlas en la interfaz. En caso de que se grabasen más de 8 notas, se descartaría la más antigua y se guardaría la nueva nota que se quiere añadir.
 
+### Estructura
+Nuestro protoripo consta de 3 módulos principales:
+ - Una aplicación Web para el controlador (móvil) que proporciona 2 interfaces: 
+ 
+   * Mando: Permite seleccionar mediante las flechas el video a reproduccir, el boton "OK" que permite acceder al video en  cuention. La flecha de retorno (parte inferior izquierda) que permite volver al menu de seleccion. Y el boton de notas que permite acceder al almacenamiento de las notas del usuario.
+   * Gestos: Permite realizar acciones en funcion del numero de dedos que se pulsen en pantalla acompañado del desplazamiento vestical hacia arriba o abajo. Acciones tales como pausar/ reproduccir, aumentar o disminuir el volumen, ir al anterior / siguiente vídeo o bien grabar una nota.
+   
+Aclaracion: Se puede navegar entre ambos modos con el boton localizado en la parte superior derecha.
+ 
+- Una aplicación Web para el reproductor de vídeo encargada de reproduccir, seleccionar los videos, realizar las acciones equivalentes a las del usuario usando para ello las teclas correspondientes, así como visualizar los imputs del usuario.
+
+- Servidor: Encargador de controlar la interracion entre el reproductor y el móvil, comunicandolos.
+ 
 ## Caso de uso
 
 La aplicacion esta orientada a usuarios que bien se encuentran en una edad avanzada o bien sufren una condicion fisica  y realizar desplazamientos es una molestia para ellos. La situacion de estas personas requiere en ciertos casos de tratamientos medicos, ir a quedar con la familia o diversas acciones que es importante que no las pasen por alto. Por lo que hemos introducido un sistema de notas para que todas estas ideas queden almacenadas y pueda el usuario interesado recordarlas cuando desee.  
 
-Por otro lado, estos usuarios se encuentra lejos del reproductor de video ya sea en el sofa de su casa, en la cama o bien sentando en una silla. Y de manera remota permitimos interactuar con el reproductor, sin la necesidad de levantarse del sitio donde se encuentren. Mediante gestos o bien el controlador pueden realizar diferentes acciones: tales como guardar notas, subir o bajar el volumen, avanzar al siguiente video o volver al anterior, pausar / reproducir el video.
+Por otro lado, estos usuarios se encuentra lejos del reproductor de video ya sea en el sofa de su casa, en la cama o bien sentando en una silla. Y de manera remota permitimos interactuar con el reproductor, sin la necesidad de levantarse del sitio donde se encuentren. Mediante gestos o bien el mando pueden realizar diferentes acciones: tales como guardar notas, subir o bajar el volumen, avanzar al siguiente video o volver al anterior, pausar / reproducir el video.
