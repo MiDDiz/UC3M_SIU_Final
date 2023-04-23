@@ -1,6 +1,12 @@
-# UC3M_SIU_Final
+# Sistemas Interactivos Y Ubicuos Parte 2
 
 ## Contexto de aplicación
+
+La aplicacion esta orientada a usuarios que bien se encuentran en una edad avanzada o bien sufren una condicion fisica  y realizar desplazamientos es una molestia para ellos. La situacion de estas personas requiere en ciertos casos de tratamientos medicos, ir a quedar con la familia o diversas acciones que es importante que no las pasen por alto. Por lo que hemos introducido un sistema de notas para que todas estas ideas queden almacenadas y pueda el usuario interesado recordarlas cuando desee.  
+
+Por otro lado, estos usuarios se encuentra lejos del reproductor de video ya sea en el sofa de su casa, en la cama o bien sentando en una silla. Y de manera remota permitimos interactuar con el reproductor, sin la necesidad de levantarse del sitio donde se encuentren. Mediante gestos o bien el mando pueden realizar diferentes acciones: tales como guardar notas, subir o bajar el volumen, avanzar al siguiente video o volver al anterior, pausar / reproducir el video.
+
+
 
 ## Funcionalidades
 
@@ -32,20 +38,17 @@ En primer lugar, para grabar una nota, el usuario debe colocar 4 dedos en la pan
 Cuando el usuario quiera visualizar sus notas, solo debe ir a la pestaña principal en el móvil, y pulsar en el botón de la parte inferior derecha. Esto hará que en el reproductor se muestren todas las notas que tiene almacenado el sistema. *Ver decisiones de diseño, apartado notas para más detalle.
 
 
-## Archivos y organización del código
-
 ## Decisiones de diseño
 
 ### Tratamiento de usuarios
-* ¿Pemitir que se conecte mas de un controlador? 
-    NO -> Hay que dar feedback si se quiere conectar otro dispositivo -> Echar el anterior (Preguntar a player/controler anterior -> ¿Quieres conectar el nuevo dispositivo?)
+Esta aplicación no contará con tratamiento de usuarios, por simplicidad solo habrá un usuario compartido. Asi mismo, solo se podrán conectar de manera simultánea un reproductor y un controlador. De esta forma si se conectase otro reproductor o controlador al sistema, el primero dejaría de funcionar.
 
 ### Notas
 Para una implementación más sencilla, al igual que con los usuarios hemos decidido tener tan solo un conjunto de notas compartido. Estas notas se almacenarán en notes.json y perdurarán en el tiempo aunque se reinicie el servidor.
 
 Solo se podrán tener un máximo de 8 notas, por simplicidad a la hora de mostrarlas en la interfaz. En caso de que se grabasen más de 8 notas, se descartaría la más antigua y se guardaría la nueva nota que se quiere añadir.
 
-### Estructura
+### Estructura y organización del código
 Nuestro protoripo consta de 3 módulos principales:
  - Una aplicación Web para el controlador (móvil) que proporciona 2 interfaces: 
  
@@ -58,8 +61,3 @@ Aclaracion: Se puede navegar entre ambos modos con el boton localizado en la par
 
 - Servidor: Encargador de controlar la interracion entre el reproductor y el móvil, comunicandolos.
  
-## Caso de uso
-
-La aplicacion esta orientada a usuarios que bien se encuentran en una edad avanzada o bien sufren una condicion fisica  y realizar desplazamientos es una molestia para ellos. La situacion de estas personas requiere en ciertos casos de tratamientos medicos, ir a quedar con la familia o diversas acciones que es importante que no las pasen por alto. Por lo que hemos introducido un sistema de notas para que todas estas ideas queden almacenadas y pueda el usuario interesado recordarlas cuando desee.  
-
-Por otro lado, estos usuarios se encuentra lejos del reproductor de video ya sea en el sofa de su casa, en la cama o bien sentando en una silla. Y de manera remota permitimos interactuar con el reproductor, sin la necesidad de levantarse del sitio donde se encuentren. Mediante gestos o bien el mando pueden realizar diferentes acciones: tales como guardar notas, subir o bajar el volumen, avanzar al siguiente video o volver al anterior, pausar / reproducir el video.
