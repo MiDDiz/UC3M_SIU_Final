@@ -50,6 +50,7 @@ document.addEventListener("touchstart", (evento) => {
     n_dedos = 4;
     navigator.vibrate(200);
     reconocer_voz();
+    $(mensaje_dedos).text("TOMAR NOTA");
   }
   else if(evento.touches.length == 3){
     n_dedos = 3;
@@ -154,7 +155,7 @@ const reconocer_voz = () =>{
     recnocimiento_voz.continuous = true 
     recnocimiento_voz.interimResults = true
     recnocimiento_voz.onresult = (evento) =>{
-      const transcript = evento.results[evento.results.length - 1][0].transcript;
+      const transcript = event.results[event.results.length - 1][0].transcript;
       console.log(transcript);
       if (transcript.toLowerCase().includes(" cerrar nota")){
         recnocimiento_voz.stop();
