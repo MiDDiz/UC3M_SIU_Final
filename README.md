@@ -11,7 +11,7 @@ Por otro lado, estos usuarios se encuentra lejos del reproductor de video ya sea
 ## Funcionalidades
 
 ### Controles básicos y selección de video
-El usuario puede conectar el móvil a través de el código qr generado en la página principal del reproductor.
+El usuario puede conectar el móvil a través de el código qr generado en la página principal del reproductor. A esta página se accederá mediante el enlace: "http://localhost:3000/player/"
 Una vez en la página de reproducción de videos, se puede navegar entre los distintos videos ya sea con el móvil conectado a modo de controlador, o tambien con las flechas del teclado.
 Cuando el video deseado esté seleccionado, se pulsa el botón ok en el móvil o se le hace click para reproducirlo (Esta funcionalidad puede dar problemas ya que para que se reproduzca el video y funcionen el resto de comandos es necesario hacer click a la ventana modal que aparece).
 

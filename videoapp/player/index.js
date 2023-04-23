@@ -1,6 +1,6 @@
 
 
-const QRPAGE = "localhost:3000/mobile/index.html"
+const QRPAGE = "http://localhost:3000/mobile/index.html"
 
 
 function generateQR(){
