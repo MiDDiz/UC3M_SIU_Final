@@ -1,5 +1,5 @@
 
-
+/* Function to show the notes on the player */
 function showNotes(notes){
 	let notesDOM = document.querySelectorAll(".note");
 	let i = 0;

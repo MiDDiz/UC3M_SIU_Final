@@ -311,11 +311,7 @@ document.addEventListener('keydown', function(event) {
 			break;
 		case "n":
 			changePrevVideo(userPlayer);
-			break;
-		case "1":
-			socket.emit("REQUEST-NOTEPAD");
-			break;
-			
+			break;			
 	}
 });
 
@@ -362,7 +358,6 @@ function doAction(action){
 }
 
 function showNotes(notes){
-	console.log(notes);
 	/* Set notes to cookie in order to get it on hotes.html */
 	document.cookie = `notes=${JSON.stringify(notes)}; path=/` // Cookie expires as the browser ends session 
 	location.href = "./notes.html";

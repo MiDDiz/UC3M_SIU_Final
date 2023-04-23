@@ -69,21 +69,6 @@ io.on("connection", (socket) => {
       addNewNote(text);
       }
     });
-
-    
-  /* Communications that only require the player */
-  /*
-  if (playerSocket){
-    // The player requests the notepad without mobile (key 1 on keyboard)
-    playerSocket.on("REQUEST-NOTEPAD");
-    let notepad = getAllNotes();
-    playerSocket.emit("SHOW_NOTEPAD", notepad);
-  }*/
-  /*socket.on("DO_ACTION", (data)=>{
-    console.log(socket.id);
-    console.log(clientSocket.id);
-    console.log(playerSocket.id);
-  });*/
 });
 
 /*Inserts a new note on the notepad. 

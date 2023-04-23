@@ -6,11 +6,11 @@ let velocidad = 0;
 
 var n_dedos = 0;
 var subiendo = 0;
-/*Var de control utilizada para solo detectar una acción cada vez */
+/*Control var used to send only one action at a time*/
 var realizando_accion = 0;
 var accion_mandada = 0;
 
-/* Controll var in order to detect when the interface has to behave as a normal controller 
+/* Control var in order to detect when the interface has to behave as a normal controller 
 or as a  gesture controller */
 var controllerState = true;
 
@@ -22,9 +22,10 @@ socket.on("connect", () => {
   });
 });
   
-
+/*Function that control all the communications from 
+controler to the server */
   function send_action(action, text){
-    console.log(action);
+    //console.log(action);
     navigator.vibrate(200);
     if (action == "ADD_NOTE"){
       socket.emit("ADD_NOTE", text);
@@ -49,7 +50,6 @@ document.addEventListener("touchstart", (evento) => {
     n_dedos = 4;
     navigator.vibrate(200);
     reconocer_voz();
-    $(mensaje_dedos).text("TOMAR NOTA");
   }
   else if(evento.touches.length == 3){
     n_dedos = 3;
@@ -64,10 +64,12 @@ document.addEventListener("touchstart", (evento) => {
     $(mensaje_dedos).text("PLAY-PAUSE");
   }
   else {
-    //RAISE ERROR
+    console.log("Wrong ammount of numbers")
   }
 });
 
+/*Function used to change from controller 
+mode to gesture mode */
 function changeController(){
 	controllerState = !controllerState;
 	if ($(".controller").is(":visible")){
@@ -90,24 +92,23 @@ function changeController(){
     velocidad = evento.accelerationIncludingGravity.y;
 
     if(((velocidad) > 3 || (velocidad) < -3) && realizando_accion == 0){
-      /*console.log(`dif: ${velocidad}`);*/
       vel_buff = velocidad 
       realizando_accion = 1;
-      //Este fragmento indica si la acción realizada es de subida o bajada
+      //This code is used to tell if the action is up to down or down to up
       if((vel_buff) > 0){
         subiendo = 1;
       } else if (vel_buff < 0) {
         subiendo = 0;
       }
-      /* A continuación, hacemos el switch para poder mandar 
-      distintas acciones en función del número de dedos*/
+      /*Then, this switch is used to do different actions 
+      depending on the number of fingers*/
       switch(n_dedos){
         case 3:
             if (subiendo == 1){
-              // siguiente video
+              // next video
               send_action("VIDEO-NEXT");
             } else{
-              // anterior video
+              // previous video
               send_action("VIDEO-PREV");
             }
             setTimeout(() => {
@@ -117,10 +118,10 @@ function changeController(){
           break;
         case 2:
           if (subiendo == 1){
-            // subir volumen
+            // volume up
             send_action("VOLUME-UP");
           } else{
-            // bajar video
+            // volume down
             send_action("VOLUME-DOWN");
           }
           setTimeout(() => {
@@ -129,7 +130,8 @@ function changeController(){
             , 500);
           break;
         case 1:
-          //Para el play/pausa, no importa si se realiza subida o bajada
+          /*for the play/pause action, it does not care if the 
+          action is up to down or down to up */
           send_action("PLAY-PAUSE");
           setTimeout(() => {
             n_dedos = 0;
@@ -138,21 +140,21 @@ function changeController(){
           break;
       }
     }
-    // Si no se realiza ninguna acción, se resetea la variable
+    // If no action is being done, it resets the control variable
     if ((velocidad) < 1 && (velocidad) >-1 && realizando_accion == 1 && accion_mandada == 1){
       realizando_accion = 0;
     }
   });
 
 
-
+/* Function that recognices voice */
 const reconocer_voz = () =>{
   if ("webkitSpeechRecognition" in window) {
     const recnocimiento_voz = new webkitSpeechRecognition();
     recnocimiento_voz.continuous = true 
     recnocimiento_voz.interimResults = true
     recnocimiento_voz.onresult = (evento) =>{
-      const transcript = event.results[event.results.length - 1][0].transcript;
+      const transcript = evento.results[evento.results.length - 1][0].transcript;
       console.log(transcript);
       if (transcript.toLowerCase().includes(" cerrar nota")){
         recnocimiento_voz.stop();
@@ -169,7 +171,7 @@ const reconocer_voz = () =>{
 }
 
 
-// Botones mando
+// Buttons asigment for the controller
 var boton_arr = document.getElementById("arr");
 var boton_izq = document.getElementById("izq");
 var boton_ok = document.getElementById("ok");
