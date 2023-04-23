@@ -40,11 +40,6 @@ controler to the server */
   /* Touch listeners to change visual feedback */
 document.addEventListener("touchstart", (evento) => { 
 
-	evento.preventDefault();
-	if (controllerState == false){
-		return ;
-	}
-
   if (evento.touches.length == 4){
     // lanzar directamente notepad
     n_dedos = 4;

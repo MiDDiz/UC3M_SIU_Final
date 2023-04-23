@@ -24,12 +24,12 @@ var playerSocket = null;
 
 io.on("connection", (socket) => {
   /* Main connection listener */
-  console.log(`socket connected ${socket.id}`);
+  //console.log(`socket connected ${socket.id}`);
 
   /* Player connection */
   socket.on("PLAYER_CONNECTED", () => {
     playerSocket = socket; 
-    console.log("PLAYER CONNECTED");
+    //console.log("PLAYER CONNECTED");
     playerSocket.emit("ACK_CONNECTION");
     
   });
@@ -37,15 +37,15 @@ io.on("connection", (socket) => {
   /* Mobile client connection */
   socket.on("MOBILE_CONNECTED", () => {
     clientSocket = socket;
-    console.log("MOBILE CONNECTED");
+    //console.log("MOBILE CONNECTED");
     clientSocket.emit("ACK_CONNECTION");
   });
 
     /* Comunications between mobile and player */
       socket.on("DO_ACTION", (data) => {
         if (clientSocket && socket.id == clientSocket.id){
-          console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
-          console.log(data);
+          //console.log(`Transfiriendo datos de ${clientSocket.id} a ${playerSocket.id}`)
+          //console.log(data);
           playerSocket.emit("DO_ACTION_PLAYER", {
               pointerId: clientSocket.id,
               action: data,    
@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
     // Adds a note to the notepad
     socket.on("ADD_NOTE", (text) => {
       if (clientSocket && socket.id == clientSocket.id){
-      console.log("Adding note");
+      //console.log("Adding note");
       addNewNote(text);
       }
     });
