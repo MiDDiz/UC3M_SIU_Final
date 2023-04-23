@@ -1,4 +1,8 @@
 # Sistemas Interactivos Y Ubicuos Parte 2
+Autores:
+Joel Martin Garcia - 100450999
+Joan Carlos Naftanaila - 100451199
+Alvaro Perez Vergara - 100451185
 
 ## Contexto de aplicación
 

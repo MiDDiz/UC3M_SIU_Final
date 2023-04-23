@@ -1,3 +1,10 @@
+/*
+Autores:
+Joel Martin Garcia - 100450999
+Joan Carlos Naftanaila - 100451199
+Alvaro Perez Vergara - 100451185 
+*/
+
 const fs = require('fs');
 const express = require('express');
 const app = express();
